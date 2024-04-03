@@ -269,11 +269,25 @@ const tasks = useCookie(
   }
 );
 
-// 編集用のモーダルを開く関数
+// TODO追加
+function addTask() {
+  if(newTask.value.length >= 1) {
+    tasks.value.push(newTask.value)
+  }
+  newTask.value = ''
+};
+
+// 編集用のモーダルを開く
 const openEditModal = (index) => {
   isEditing.value  = true;
   editIndex.value  = index;
   editedTask.value = tasks.value[index];
+};
+
+// 編集を保存する
+const saveEditedTask = () => {
+  tasks.value[editIndex.value] = editedTask.value;
+  closeModal();
 };
 
 // キャンセルで編集用のモーダルを閉じる
@@ -284,19 +298,7 @@ const closeModal = () => {
   isModalOpen.value = false
 };
 
-// 編集を保存する関数
-const saveEditedTask = () => {
-  tasks.value[editIndex.value] = editedTask.value;
-  closeModal();
-};
-
-function addTask() {
-  if(newTask.value.length >= 1) {
-    tasks.value.push(newTask.value)
-  }
-  newTask.value = ''
-};
-
+// TODO削除
 function deleteTask(index) {
   tasks.value.splice(index, 1)
 };
@@ -305,10 +307,6 @@ function deleteTask(index) {
 function clearTask() {
   tasks.value = []
 };
-
-
-const counter = useCookie('counter')
-counter.value = counter.value || Math.round(Math.random() * 1000)
 
 </script>
 
